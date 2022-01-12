@@ -23,6 +23,7 @@ function playRound(playerSelection, computerSelection) {
     }    
 }
 
+
 const playerSelection = 2;
 const computerSelection = computerPlay();
 console.log(playRound(playerSelection, computerSelection));
