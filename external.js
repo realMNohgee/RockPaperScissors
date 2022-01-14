@@ -2,6 +2,7 @@ function game() {
     let wins = 0;
     let loses = 0;
   
+  
     while (wins < 3 && loses < 3) {
       let playerSelect = window.prompt("Please select your weapon of choice!<br> Rock, Paper, or Scissors?");
       let playerSelectLowerCase = playerSelect.toLowerCase().trim();
@@ -33,7 +34,9 @@ function playRound(playerSelection, computerSelection) {
         return `It's a draw!`
     }    
 }
+}
 
 
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+    
+
+console.log(playRound(playerSelection, computerSelection))}
