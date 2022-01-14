@@ -1,22 +1,33 @@
-const computerPlay = (min = 1, max = 4) => {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-console.log('1 = Scissors, 2 = Paper, 3 = Rock');
+function game() {
+    let wins = 0;
+    let loses = 0;
+  
+    while (wins < 3 && loses < 3) {
+      let playerSelect = window.prompt("Please select your weapon of choice!<br> Rock, Paper, or Scissors?");
+      let playerSelectLowerCase = playerSelect.toLowerCase().trim();
+      console.log("playerSelect: " + playerSelectLowerCase);
+  
+      function computerRandomSelect(computerPlay) {
+        computerPlay = ["rock", "paper", "scissors"];
+        return computerPlay[Math.floor(Math.random() * computerPlay.length)];
+      }
+  
+      let computerSelection = computerRandomSelect();
+      console.log("computerSelection: " + computerSelection);
 
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === 3 && computerSelection === 1) {
+    if (playerSelection === 'rock' && computerSelection === 'scissors' ) {
         return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 1 && computerSelection === 3) {
+    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
         return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
-    } else if (playerSelection === 2 && computerSelection === 1) {
+    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
         return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
-    } else if (playerSelection === 1 && computerSelection === 2) {
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
         return  `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 3 && computerSelection === 2) {
+    } else if (playerSelection === 'rock' && computerSelection === 'paper') {
         return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 2 && computerSelection === 3) {
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
         return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
     } else if (playerSelection === computerSelection) {
         return `It's a draw!`
@@ -24,6 +35,5 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
-const playerSelection = 2;
 const computerSelection = computerPlay();
 console.log(playRound(playerSelection, computerSelection));
