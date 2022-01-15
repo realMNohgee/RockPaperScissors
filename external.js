@@ -1,42 +1,55 @@
-function game() {
-    let wins = 0;
-    let loses = 0;
-  
-  
-    while (wins < 3 && loses < 3) {
-      let playerSelect = window.prompt("Please select your weapon of choice!<br> Rock, Paper, or Scissors?");
-      let playerSelectLowerCase = playerSelect.toLowerCase().trim();
-      console.log("playerSelect: " + playerSelectLowerCase);
-  
-      function computerRandomSelect(computerPlay) {
-        computerPlay = ["rock", "paper", "scissors"];
-        return computerPlay[Math.floor(Math.random() * computerPlay.length)];
-      }
-  
-      let computerSelection = computerRandomSelect();
-      console.log("computerSelection: " + computerSelection);
+let playerSelection = prompt("Select your weapon! Rock, paper or scissors?").toLowerCase();
 
+let computerSelection = Math.random();
 
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection === 'rock' && computerSelection === 'scissors' ) {
-        return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
-    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
-    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return  `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Player Wins!`
-    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return `Player selects ${playerSelection}, Computer selects ${computerSelection}, Computer Wins!`
-    } else if (playerSelection === computerSelection) {
-        return `It's a draw!`
-    }    
+if ( computerSelection < 0.34 ) {
+	computerSelection = "rock";
+} else if ( computerSelection <= 0.67 ) {
+	computerSelection = "paper";
+} else {
+	computerSelection = "scissors";
 }
-}
+ 
+let compare = function( selection1, selection2 ) {
+    if ( selection1 === selection2 ) {
+        return "The result is a tie!";
+    }
 
+    else if ( selection1 === "rock" ) {
+        if ( selection2 === "scissors" ) {
+            return "rock wins"
+        }
 
+        else if ( selection1 === "paper" ) {
+            return "paper wins";
+        }
+    }
+
+    else if ( selection1 === "paper" ) {
+        if ( selection2 === "scissors" ) {
+            return "scissors win"
+        }
+
+        else if ( selection1 === "rock" ) {
+            return "paper wins";
+        }
+    }
+
+    else if ( selection1 === "scissors" ) {
+        if ( selection2 === "paper" ) {
+            return "scissors win"
+        }
+
+        else if ( selection2 === "rock" ) {
+            return "rock wins";
+        }
+    }
     
+}
+function game() {
+    for(var i=0; i<5; i++) {
+      singleRound();
+    }
+}    
 
-console.log(playRound(playerSelection, computerSelection))}
+console.log(compare(playerSelection,computerSelection));
