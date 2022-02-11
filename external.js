@@ -1,55 +1,88 @@
-let playerSelection = prompt("Select your weapon! Rock, paper or scissors?").toLowerCase();
-
-let computerSelection = Math.random();
-
-if ( computerSelection < 0.34 ) {
-	computerSelection = "rock";
-} else if ( computerSelection <= 0.67 ) {
-	computerSelection = "paper";
-} else {
-	computerSelection = "scissors";
-}
- 
-let compare = function( selection1, selection2 ) {
-    if ( selection1 === selection2 ) {
-        return "The result is a tie!";
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) return -1;
+    if (playerSelection === 'Rock' && computerSelection === 'Scissor' || 
+        playerSelection === 'Paper' && computerSelection === 'Rock' ||
+        playerSelection === 'Scissor' && computerSelection === 'Paper'
+    ) {
+      return 1;
+    } else {
+      return 0;
     }
-
-    else if ( selection1 === "rock" ) {
-        if ( selection2 === "scissors" ) {
-            return "rock wins"
+  }
+  
+  function playerChoiche(eventChoiche) {
+    return eventChoiche;
+  }
+  
+  function computerChoiche() {
+    const possibileChoiche = ['Rock', 'Paper','Scissor'];
+    const randomChoice = Math.floor(Math.random() * possibileChoiche.length);
+    return possibileChoiche[randomChoice];
+  }
+  
+  // Reset the counter 'timesPerRound' and start a new game
+  function newGame() {
+    headerWinnerEl.innerText = '';
+    playerPointsEl.innerText = '0';
+    computerPointsEl.innerText = '0';    
+    hiddenEl.classList.add('hidden');
+    howManyTimesRematch++;
+  
+    if (howManyTimesRematch % 4 === 0) {
+      headerWinnerEl.innerText = "🦆🎁🌹";
+    } 
+    return playerPoints = 0, computerPoints = 0, timesPerRound = 0;
+  }
+  
+  // Main function
+  function startGame() {
+    for (btn of btnChoicheEl) {
+      btn.addEventListener('click', (e) => {
+        let currentPlayerChoiche = e.target.name;
+        let currentComputerChoiche = computerChoiche();
+  
+        if (timesPerRound < 5) {        
+          const theWinner = playRound(currentPlayerChoiche, currentComputerChoiche);
+          if (theWinner === 1) {
+            playerPoints++;
+            playerPointsEl.innerText = playerPoints;
+            showStatusEl.innerText = `${currentPlayerChoiche} beats Computer's ${currentComputerChoiche} `;
+          }
+          else if (theWinner === 0) {
+            computerPoints++;
+            computerPointsEl.innerText = computerPoints;
+            showStatusEl.innerText = `Computer ${currentComputerChoiche} beats ${currentPlayerChoiche}`;
+          }
+          else if (theWinner === -1) {
+            showStatusEl.innerText = `${currentComputerChoiche} = ${currentPlayerChoiche} `;
+          }
+          timesPerRound++; 
         }
-
-        else if ( selection1 === "paper" ) {
-            return "paper wins";
+        if (timesPerRound === 5) {        
+          showStatusEl.innerText = '';
+          if (playerPoints > computerPoints) {
+            headerWinnerEl.innerText = 'Player Won!'
+          }
+          else if (playerPoints < computerPoints) headerWinnerEl.innerText = 'Computer Won!'
+          else headerWinnerEl.innerText = 'Draw!';
+          hiddenEl.classList.remove('hidden')
         }
-    }
-
-    else if ( selection1 === "paper" ) {
-        if ( selection2 === "scissors" ) {
-            return "scissors win"
-        }
-
-        else if ( selection1 === "rock" ) {
-            return "paper wins";
-        }
-    }
-
-    else if ( selection1 === "scissors" ) {
-        if ( selection2 === "paper" ) {
-            return "scissors win"
-        }
-
-        else if ( selection2 === "rock" ) {
-            return "rock wins";
-        }
-    }
-    
-}
-function game() {
-    for(var i=0; i<5; i++) {
-      singleRound();
-    }
-}    
-
-console.log(compare(playerSelection,computerSelection));
+      })
+    }  
+  }
+  
+  
+  // Init the game
+  const btnChoicheEl = document.querySelectorAll('.btn-choiche');
+  const btnResetEl = document.querySelector('.btn-reset');
+  const headerWinnerEl = document.querySelector('.winner-is');
+  const playerPointsEl = document.querySelector('.player-points');
+  const computerPointsEl = document.querySelector('.computer-points');
+  const showStatusEl = document.querySelector('.show-status');
+  const hiddenEl = document.querySelector('.hidden');
+  let timesPerRound = 0, playerPoints = 0, computerPoints = 0;
+  let howManyTimesRematch = 0;
+  
+  btnResetEl.addEventListener('click', newGame);
+  
+  startGame();
